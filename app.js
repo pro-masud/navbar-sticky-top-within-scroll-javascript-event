@@ -47,7 +47,7 @@ window.addEventListener("scroll", () => {
    }
 
     //    show top icon here now
-    if( scrollHeight > 300){
+    if( scrollHeight > 400){
         topLink.classList.add("show-link");
     }else{
         topLink.classList.remove("show-link");
@@ -57,3 +57,46 @@ window.addEventListener("scroll", () => {
 
 // ********** smooth scroll ************
 // select links
+
+
+const scrollLinks = document.querySelectorAll(".scroll-link");
+
+scrollLinks.forEach((link) => {
+
+    link.addEventListener("click", (e) => {
+        // prevent default here
+        e.preventDefault();
+
+        // Navigate to specific spot
+        const id = e.currentTarget.getAttribute("href").slice(1);
+        // console.log(id);
+
+        const element = document.getElementById(id);
+
+        // get parent elements here
+
+        const linksHeight = links.getBoundingClientRect().height;
+        const containerHeight = linksContent.getBoundingClientRect().height;
+
+        const fixedNav = navbar.classList.contains("fixed-nav");
+
+        let position = element.offsetTop - linksHeight;
+
+        if(!fixedNav){
+            position = position - linksHeight;
+        }
+
+        if( linksHeight > 100){
+            position = position + containerHeight;
+        }
+
+        window.scrollTo({
+            left: 0,
+            top: position,
+        });
+
+        // close here
+        linksContent.style.height = 0;
+
+    });
+});
